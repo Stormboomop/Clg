@@ -1,0 +1,345 @@
+traffic lights...
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+class A extends JFrame implements ItemListener {
+
+    JLabel l1, l2;
+    JRadioButton r1, r2, r3;
+    ButtonGroup bg;
+    JPanel p, p1;
+
+    public A() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new GridLayout(2, 1));
+        setSize(400, 300);
+
+        // Top panel (message)
+        p = new JPanel(new FlowLayout());
+        l1 = new JLabel(""); // initially empty
+        Font f = new Font("Verdana", Font.BOLD, 40);
+        l1.setFont(f);
+        p.add(l1);
+        add(p);
+
+        // Bottom panel (buttons)
+        p1 = new JPanel(new FlowLayout());
+        l2 = new JLabel("Select Lights");
+        p1.add(l2);
+
+        r1 = new JRadioButton("Red Light");
+        r1.setBackground(Color.RED);
+        p1.add(r1);
+        r1.addItemListener(this);
+
+        r2 = new JRadioButton("Yellow Light");
+        r2.setBackground(Color.YELLOW);
+        p1.add(r2);
+        r2.addItemListener(this);
+
+        r3 = new JRadioButton("Green Light");
+        r3.setBackground(Color.GREEN);
+        p1.add(r3);
+        r3.addItemListener(this);
+
+        add(p1);
+
+        // Group buttons
+        bg = new ButtonGroup();
+        bg.add(r1);
+        bg.add(r2);
+        bg.add(r3);
+
+        setVisible(true);
+    }
+
+    public void itemStateChanged(ItemEvent i) {
+        JRadioButton jb = (JRadioButton) i.getSource();
+
+        if (jb.isSelected()) {
+            switch (jb.getText()) {
+                case "Red Light":
+                    l1.setText("STOP");
+                    l1.setForeground(Color.RED);
+                    break;
+
+                case "Yellow Light":
+                    l1.setText("READY");
+                    l1.setForeground(Color.ORANGE);
+                    break;
+
+                case "Green Light":
+                    l1.setText("GO");
+                    l1.setForeground(Color.GREEN);
+                    break;
+            }
+        }
+    }
+}
+
+public class TLights {
+    public static void main(String[] args) {
+        new A();
+    }
+}
+
+
+
+num1  num2....
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+class A extends JFrame implements ActionListener {
+
+    JLabel l1, l2, l3;
+    JTextField tf1, tf2, tf3;
+    JButton b1;
+
+    A() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new FlowLayout());
+        setSize(400, 200);
+
+        l1 = new JLabel("Enter Number1");
+        add(l1);
+
+        tf1 = new JTextField(10);
+        add(tf1);
+
+        l2 = new JLabel("Enter Number2");
+        add(l2);
+
+        tf2 = new JTextField(10);
+        add(tf2);
+
+        l3 = new JLabel("Result");
+        add(l3);
+
+        tf3 = new JTextField(10);
+        tf3.setEditable(false); // optional improvement
+        add(tf3);
+
+        b1 = new JButton("Divide");
+        add(b1);
+        b1.addActionListener(this);
+
+        setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent ae) {
+        try {
+            int a = Integer.parseInt(tf1.getText());
+            int b = Integer.parseInt(tf2.getText());
+
+            if (b == 0)
+                throw new ArithmeticException("Divide by Zero Error");
+
+            float c = (float) a / b;
+            tf3.setText(String.valueOf(c));
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Invalid Input: Enter integers only");
+        } catch (ArithmeticException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }
+}
+
+public class JavaApplication9 {
+    public static void main(String[] args) {
+        new A();
+    }
+}
+
+handle key events
+import java.awt.*;
+import java.awt.event.*;
+
+class KeyEventDemo extends Frame implements KeyListener {
+
+    Label l;
+
+    KeyEventDemo() {
+        setTitle("Key Event Demo");
+        setSize(400, 200);
+        setLayout(new FlowLayout());
+
+        l = new Label("Press any key...");
+        add(l);
+
+        addKeyListener(this);
+
+        // 🔥 Important fix (ADD THIS LINE)
+        setFocusable(true);
+
+        setVisible(true);
+
+        // Close window
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                dispose();
+            }
+        });
+    }
+
+    // When key is pressed
+    public void keyPressed(KeyEvent e) {
+        l.setText("Key Pressed: " + e.getKeyChar());
+    }
+
+    // When key is released
+    public void keyReleased(KeyEvent e) {
+        l.setText("Key Released: " + e.getKeyChar());
+    }
+
+    // When key is typed
+    public void keyTyped(KeyEvent e) {
+        l.setText("Key Typed: " + e.getKeyChar());
+    }
+
+    public static void main(String[] args) {
+        new KeyEventDemo();
+    }
+}
+
+calc...
+package calc;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+class A extends JFrame implements ActionListener {
+
+    JButton b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15, b16;
+    JTextField tf1;
+    JPanel p;
+
+    String v = "";
+    String v1 = "0";
+    String op = "";
+
+    public A() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(400, 400);
+
+        p = new JPanel(new FlowLayout());
+        tf1 = new JTextField(10);
+        p.add(tf1);
+        add(p);
+
+        setLayout(new GridLayout(0, 3));
+
+        b1 = new JButton("1"); add(b1);
+        b2 = new JButton("2"); add(b2);
+        b3 = new JButton("3"); add(b3);
+        b4 = new JButton("4"); add(b4);
+        b5 = new JButton("5"); add(b5);
+        b6 = new JButton("6"); add(b6);
+        b7 = new JButton("7"); add(b7);
+        b8 = new JButton("8"); add(b8);
+        b9 = new JButton("9"); add(b9);
+        b10 = new JButton("0"); add(b10);
+
+        b11 = new JButton("+"); add(b11);
+        b12 = new JButton("-"); add(b12);
+        b13 = new JButton("*"); add(b13);
+        b14 = new JButton("/"); add(b14);
+        b16 = new JButton("%"); add(b16);
+        b15 = new JButton("="); add(b15);
+
+        // Add listeners
+        JButton[] buttons = {b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16};
+        for (JButton btn : buttons) {
+            btn.addActionListener(this);
+        }
+
+        setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent ae) {
+        String b = ae.getActionCommand();
+
+        switch (b) {
+
+            case "0": case "1": case "2": case "3": case "4":
+            case "5": case "6": case "7": case "8": case "9":
+                v = v + b;
+                tf1.setText(v);
+                break;
+
+            case "+": case "-": case "*": case "/": case "%":
+                op = b;
+                v1 = tf1.getText();
+                v = "";
+                break;
+
+            case "=":
+                String v2 = tf1.getText();
+                if (v2.equals("")) v2 = "0";
+
+                try {
+                    long n1 = Long.parseLong(v1);
+                    long n2 = Long.parseLong(v2);
+                    long result = 0;
+
+                    switch (op) {
+                        case "+": result = n1 + n2; break;
+                        case "-": result = n1 - n2; break;
+                        case "*": result = n1 * n2; break;
+                        case "/": result = n1 / n2; break;
+                        case "%": result = n1 % n2; break;
+                    }
+
+                    tf1.setText(String.valueOf(result));
+                    v = "";
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
+                }
+                break;
+        }
+    }
+}
+
+public class Calc {
+    public static void main(String[] args) {
+        new A();
+    }
+}
+
+
+
+good morning
+class MyRunnable implements Runnable {
+    String message;
+    int delay;
+
+    MyRunnable(String msg, int d) {
+        message = msg;
+        delay = d;
+    }
+
+    public void run() {
+        try {
+            while (true) {
+                System.out.println(message);
+                Thread.sleep(delay);
+            }
+        } catch (InterruptedException e) {
+            System.out.println(e);
+        }
+    }
+}
+
+public class MultiThreadDemo {
+    public static void main(String[] args) {
+
+        new Thread(new MyRunnable("Good Morning", 1000)).start();
+        new Thread(new MyRunnable("Hello", 2000)).start();
+        new Thread(new MyRunnable("Welcome", 3000)).start();
+
+    }
+}
