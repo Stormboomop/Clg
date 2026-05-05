@@ -205,7 +205,6 @@ class KeyEventDemo extends Frame implements KeyListener {
 }
 
 calc...
-package calc;
 
 import javax.swing.*;
 import java.awt.*;
